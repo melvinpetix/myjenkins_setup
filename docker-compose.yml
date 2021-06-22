@@ -33,7 +33,7 @@ services:
     restart: always
 
     environment:
-      - DOCKER_HOST=tcp://host.docker.internal:2375
+      - DOCKER_HOST=tcp://host.docker.internal:2375 # <--WSL-->linux--->DOCKER_HOST=tcp://0.0.0.0:2375
       - JENKINS_SECRET=b31aec0ac1df29110b9d14970eb7da82ae8974206cc709e9b0bde257f4c700de    
       - JENKINS_AGENT_NAME=worker
       - JENKINS_URL=http://172.22.0.2:8080
