@@ -14,6 +14,8 @@ services:
       - "8090:8080"
       - "50000:50000"
       - "8443:8443"
+    network: 
+        ipv4_address: 172.18.0.1
 
   # JENKINS MASTER CONFIG
   # TODO: document
@@ -43,7 +45,10 @@ services:
       - jenkins_master
     volumes:
       - jenkins-worker:/var/jenkins_home/worker
+    network: 
+        ipv4_address: 172.18.0.2
 
 volumes:
   jenkins-master:
   jenkins-worker:
+  
