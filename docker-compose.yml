@@ -21,8 +21,5 @@ services:
     container_name: node
     user: root
     restart: always
-expose:
-      - 22
-    environment:
-      - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRX1Xdd0bjWcGN2dd62bin8W+RYDssdPccyYe8hL4+xBcGyHDoTNtH8lYdvFRbO1BT+sZy2uX42Gn8+i1p1XlQzMSqNgBE8UxAhk/zcoHQgZZ5/y/lDaF1pWzwmzN5UP39E4emdN0BUN0BkzQ8oF1hYc3Oi/EQP/9u8Oo/TLMQLhHAvBAiKxwHNaYhCDJw/84gdZeHztujejt8EiYavjH6W+mP68R2M5h/Vaf+cS0TwgINhiIf/rUKBIbM1/RogMXbL6gZK4/s15fDSvGPGFeXtemmqDpEgiJAlP9Yd2ykuutXw46TkE+7hm/0iC4V6U2KyjqWs/M62gsVEi6VrqU5 ubuntu@ip-172-31-91-158
 
+    
