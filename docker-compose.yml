@@ -10,45 +10,19 @@ services:
     restart: always
     volumes:
     - jenkins-master:/var/jenkins_home
+    - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "8090:8080"
       - "50000:50000"
       - "8443:8443"
-    network: 
-        ipv4_address: 172.18.0.1
-
-  # JENKINS MASTER CONFIG
-  # TODO: document
-
-  # SLAVE PRE-REQS
-  # jenkins > manage jenkins > manage nodes > new node
-  # node name > permanent agent / copy existing node
-  # executors: the number it's to you
-  # remote root: /var/jenkins_home
-  # defaults for rest
-  # select node from nodes list to get java launch opts w/secret hash
-
+      
   jenkins_node:
     build: ./slave
     container_name: node
     user: root
     restart: always
-
+expose:
+      - 22
     environment:
-      - DOCKER_HOST=tcp://host.docker.internal:2375 # <--WSL-->linux--->DOCKER_HOST=tcp://0.0.0.0:2375
-      - JENKINS_SECRET=b31aec0ac1df29110b9d14970eb7da82ae8974206cc709e9b0bde257f4c700de    
-      - JENKINS_AGENT_NAME=worker
-      - JENKINS_URL=http://172.22.0.2:8080
-      - JENKINS_AGENT_WORKDIR=/var/jenkins_home
+      - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDRX1Xdd0bjWcGN2dd62bin8W+RYDssdPccyYe8hL4+xBcGyHDoTNtH8lYdvFRbO1BT+sZy2uX42Gn8+i1p1XlQzMSqNgBE8UxAhk/zcoHQgZZ5/y/lDaF1pWzwmzN5UP39E4emdN0BUN0BkzQ8oF1hYc3Oi/EQP/9u8Oo/TLMQLhHAvBAiKxwHNaYhCDJw/84gdZeHztujejt8EiYavjH6W+mP68R2M5h/Vaf+cS0TwgINhiIf/rUKBIbM1/RogMXbL6gZK4/s15fDSvGPGFeXtemmqDpEgiJAlP9Yd2ykuutXw46TkE+7hm/0iC4V6U2KyjqWs/M62gsVEi6VrqU5 ubuntu@ip-172-31-91-158
 
-    depends_on:
-      - jenkins_master
-    volumes:
-      - jenkins-worker:/var/jenkins_home/worker
-    network: 
-        ipv4_address: 172.18.0.2
-
-volumes:
-  jenkins-master:
-  jenkins-worker:
-  
