@@ -1,0 +1,49 @@
+version: '2'
+services:
+  jenkins_master:
+    build: .
+    container_name: jenkins-master
+    environment:
+    - JAVA_OPTS=-Xmx2048m
+    - DOCKER_HOST=tcp://host.docker.internal:2375
+    user: root
+    restart: always
+    volumes:
+    - jenkins-master:/var/jenkins_home
+    ports:
+      - "8090:8080"
+      - "50000:50000"
+      - "8443:8443"
+
+  # JENKINS MASTER CONFIG
+  # TODO: document
+
+  # SLAVE PRE-REQS
+  # jenkins > manage jenkins > manage nodes > new node
+  # node name > permanent agent / copy existing node
+  # executors: the number it's to you
+  # remote root: /var/jenkins_home
+  # defaults for rest
+  # select node from nodes list to get java launch opts w/secret hash
+
+  jenkins_node:
+    build: ./slave
+    container_name: node
+    user: root
+    restart: always
+
+    environment:
+      - DOCKER_HOST=tcp://host.docker.internal:2375
+      - JENKINS_SECRET=  
+      - JENKINS_AGENT_NAME=
+      - JENKINS_URL=http://172.22.0.2:8080
+      - JENKINS_AGENT_WORKDIR=/var/jenkins_home
+
+    depends_on:
+      - jenkins_master
+    volumes:
+      - jenkins-worker:/var/jenkins_home/worker
+
+volumes:
+  jenkins-master:
+  jenkins-worker:
